@@ -1,17 +1,17 @@
 import { getAllArticulos, saveAllArticulos } from "../models/articulosModels.js";
 import { v4 as uuidv4 } from "uuid";
 
-export async function getArticulos({order}) {
-    let articulos = await getAllArticulos();
+// export async function getArticulos({order}) {
+//     let articulos = await getAllArticulos();
 
-    if(order === 'asc'){
-        articulos.sort((a, b) => a.title.localeCompare(b.title))
-    }else if(order === 'desc'){
-        articulos.sort((a, b) => b.title.localeCompare(a.title))
-    }
+//     if(order === 'asc'){
+//         articulos.sort((a, b) => a.title.localeCompare(b.title))
+//     }else if(order === 'desc'){
+//         articulos.sort((a, b) => b.title.localeCompare(a.title))
+//     }
 
-    return articulos;
-}
+//     return articulos;
+// }
 
 export async function getArticulos(id) {
     let articulos = await getAllArticulos();
