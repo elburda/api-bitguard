@@ -3,6 +3,7 @@ import { addArticulo, getArticuloById, listArticulos } from "../controllers/arti
 
 const router = express.Router();
 
+
 router.get('/', listArticulos)
 router.get('/:id',getArticuloById)
 router.post('/',addArticulo)
