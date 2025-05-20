@@ -1,7 +1,11 @@
 import articulosModels from '../models/articulosModels.js'
 import * as articulosService from '../services/articulosServices.js'
+import { articulosValidation } from '../validation/validation.js'
 
 export const addArticulo = async (req, res) =>{
+    const {error} = articulosValidation(req.body);
+    console.log(error)
+    if(error) return res.status(400).json({error: error})
     try{
         const articulo = new articulosModels({...req.body})
         const nuevoArticulo = await articulo.save();
@@ -32,6 +36,33 @@ export const searchByTag = async (req, res) =>{
     try{
         const tags = req.query.tags.split(',')
         const articulos = await articulosModels.find({tags: {$in: tags}})
+        res.json(articulos)
+    }catch(err){
+        res.status(400).json({error: err.message})
+    }
+}
+export const searchByTitle = async (req, res) =>{
+    try{
+        const {title, type} = req.query;
+        let regex;
+
+        switch(type){
+            case 'exact':
+            regex = new RegExp('^${title}$','i');
+            break;
+            case 'contains':
+            regex = new RegExp(title,'i');
+            break;
+            case 'startsWith':
+            regex = new RegExp('^${title}','i');
+            break;
+            case 'endsWith':
+            regex = new RegExp('${title}$','i');
+            break;
+            default:
+                res.status(400).json({error: "tipo de error no valido"})
+        }
+        const articulos = await articulosModels.find({title:{$regex: regex}})
         res.json(articulos)
     }catch(err){
         res.status(400).json({error: err.message})

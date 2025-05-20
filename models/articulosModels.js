@@ -1,5 +1,3 @@
-// import fs from "fs/promises";
-// import path from "path";
 import mongoose from "mongoose";
 import { type } from "os";
 
@@ -27,6 +25,38 @@ const articuloSchema = new mongoose.Schema({
     default: 0
     }
 })
+
+// articuloSchema.pre('save', function(next){
+//     this.title = this.title.trim();
+//     this.tags = this.tags.trim();
+//     this.description = this.description.trim();
+//     this.size = this.size.trim();
+//     this.color = this.color.trim();
+//     next()
+
+// })
+// //LOGs//
+// articuloSchema.post('save', function(doc,next){
+//     console.log('Articulo Guardado:${doc.title}')
+//     next()
+// })
+
+// articuloSchema.pre('findOneAndUpdate', function(next){
+//     const update = this.getUpdate;
+//     if(update.tags && Array.isArray(update.tags)){
+//         update.tags = update.tags.map(tag => tag.toLowerCase().trim())
+//         this.setUpdate(update)
+//     }
+//     next()
+// })
+
+// articuloSchema.pre('save', function(doc,next){
+//     if(!this.description || this.description.trim().length === 0){
+//         return next(new Error('La descripcion no debe estar vacia'))
+//     }
+//     this.description = this.description.trim()
+//     next()
+// })
 
 export default mongoose.model('articulos',articuloSchema)
 
