@@ -4,6 +4,8 @@ import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { articulosRouter, usersRouter } from "./routes/index.js";
+import { pedidosRouter } from "./routes/index.js";
+
 
 
 dotenv.config()
@@ -19,8 +21,10 @@ const app = express();
 
 app.use(express.json());
 app.use(express.static((path.join(__dirname,'public' ))))
+app.use('/pedidos', pedidosRouter);
 
 app.use('/articulos', articulosRouter)
+
 app.use('/users', usersRouter)
 app.get('/',(req, res) => {
     res.sendFile(path.join(__dirname,'public','index.html' ))

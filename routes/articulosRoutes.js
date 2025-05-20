@@ -5,8 +5,8 @@ const articulosRouter = express.Router();
 
 articulosRouter.get('/', listArticulos)
 articulosRouter.post('/',addArticulo)
-articulosRouter.get('/:id',getArticuloById)
 articulosRouter.get('/search/tags',searchByTag)
+articulosRouter.get('/:id',getArticuloById)
 articulosRouter.put('/:id',updateArticulo)
 articulosRouter.delete('/:id', deleteArticulo)
 
