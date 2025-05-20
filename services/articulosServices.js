@@ -1,4 +1,4 @@
-import { getAllArticulos, saveAllArticulos } from "../models/articulosModels.js";
+import Articulo from "../models/articulosModels.js";
 import { v4 as uuidv4 } from "uuid";
 
 export async function getArticulos({order}) {

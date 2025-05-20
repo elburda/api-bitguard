@@ -5,7 +5,7 @@ import dotenv from "dotenv"
 import {v4 as uuidv4} from "uuid";
 
 dotenv.config()
-const router = express.Router();
+const usersRouter = express.Router();
 
 const secretkey = process.env.JWT_SECRET;
 
@@ -39,7 +39,7 @@ const authenticateJWT = (req, res, next) => {
     }
 }
 
-router.post('/', async(req, res) =>{
+usersRouter.post('/', async(req, res) =>{
     const {name, lastname, email, username, password} = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10)
@@ -59,7 +59,7 @@ router.post('/', async(req, res) =>{
     res.status(201).json(userWithoutPassword)
 })
 
-router.post('/login', async(req, res) =>{
+usersRouter.post('/login', async(req, res) =>{
     const {email, password} = req.body;
 
     const user = users.find(u => u.email === email);
@@ -79,7 +79,7 @@ router.post('/login', async(req, res) =>{
     res.status(200).json({token})
 })
 
-router.get('/',authenticateJWT, async(req, res) =>{
+usersRouter.get('/',authenticateJWT, async(req, res) =>{
     console.log(req.user)
     const usersWithoutPassword = users.map(user =>{
         const {password, ...userWithoutPassword} = user;
@@ -88,4 +88,4 @@ router.get('/',authenticateJWT, async(req, res) =>{
     res.status(200).json(usersWithoutPassword)
 })
 
-export default router;
+export {usersRouter};
