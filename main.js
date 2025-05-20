@@ -55,12 +55,69 @@ console.log(os.freemem())*/
 // controllers
 // Services
 
+// const enMantenimiento = true;
+// TODO:
+// function verificarMantenimineto(req, res, next) {
+//     if(enMantenimiento){
+//         res.status(503).send("el servidor esta en mantenimiento")
+//     }else{
+//         next()
+//     }
+// }
+
+// app.use(verificarMantenimineto)
+//app.get('/test',(req,res) => {
+//     res.json("hola")
+// })
+
+/***midware de limite de peticiones
+// const solicitudesIP ={};
+// function limitarSolicitudes(req, res, next){
+//     const ip = req.ip;
+//     const tiempoActual = Date.now();
+//     if(!solicitudesIP[ip]){
+//         solicitudesIP[ip]= []
+//     }
+//     solicitudesIP[ip] = solicitudesIP[ip].filter(tiempo => tiempo >tiempoActual - 60000);
+//
+//     if(solicitudesIP[ip].length > 10 ){
+//         res.status(429).send("demasiadas solicitudes")
+//     }
+//     solicitudesIP[ip].push(tiempoActual)
+//     next()
+// }
+
+// app.use(limitarSolicitudes);
+
+// app.get('/test',(req,res) => {
+//     res.json("hola")
+// })
+
+*/
+
+
+
+
 import express from "express"
 import articulosRoutes from "./routes/articulosRoutes.js"
+import userRoutes from "./routes/userRoutes.js"
+import path from "path"
+import { fileURLToPath } from "url";
+
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 const app = express();
 
+
 app.use(express.json());
+app.use(express.static((path.join(__dirname,'public' ))))
 app.use('/articulos', articulosRoutes)
+app.use('/users', userRoutes)
+
+app.get('/',(req, res) => {
+    res.sendFile(path.join(__dirname,'public','index.html' ))
+})
 
 
 app.listen(3000,() =>{

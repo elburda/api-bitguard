@@ -19,3 +19,13 @@ export async function addArticulo(req, res) {
     const newArticulo = await articulosService.createArticulo({title, type});
     res.status(201).json(newArticulo)
 }
+
+export async function updateArticulo(req, res) {
+    const updatedArticulo = await articulosService.updateArticulo(req.params.id,req.body);
+    res.json(updatedArticulo)
+}
+
+export async function deleteArticulo(req, res) {
+    const deletedArticulo = await articulosService.deleteArticulo(req.params.id,req.body);
+    res.json({message:"deleted"})
+}
